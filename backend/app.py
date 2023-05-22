@@ -1,14 +1,15 @@
 import pymongo
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from pymongo import MongoClient
-
 app = Flask(__name__)
 
 
 def get_db():
-    client = MongoClient(
-        host="mongo", port=27017, user="mongo", password="pass123", authSource="admin"
-    )
+    client = MongoClient(host="mongo",
+                         port=27017,
+                         user="mongo",
+                         password="pass123",
+                         authSource="admin")
     db = client["mongo"]
     return db
 
@@ -16,6 +17,11 @@ def get_db():
 @app.route("/")
 def ping_server():
     return "Hello world number 239"
+
+
+@app.route("/test")
+def test():
+    return flask.render_template("index.html", token="hello-full")
 
 
 @app.route("/animals")
